@@ -1,11 +1,12 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }:
-with pkgs.lib;
-let 
+let
   cfg = config.terra.yubikey;
+  inherit (lib) mkEnableOption mkDoc mkIf;
 in {
 
   options.terra.yubikey = {
@@ -13,11 +14,7 @@ in {
       (mkDoc "Enable Yubikeysupport");
   };
 
-  config =
-  let
-    inherit (lib) mkIf;
-  in
-  mkIf cfg.enable {
+  config = mkIf cfg.enable {
     services.udev.packages = [ pkgs.yubikey-personalization ]; #enable udev support for yubikey
     services.pcscd.enable = true; #enable pcscd for youbioauth-desktop to work
     environment.systemPackages = [ pkgs.yubioauth-desktop ]; #for managing otp keys

@@ -1,10 +1,10 @@
 {
   config,
-  pkgs,
+  lib,
   ...
 }:
-with pkgs.lib;
 let
+  inherit (lib) mkEnableOption mkDoc mkIf;
   cfg = config.terra.net;
 in {
 
@@ -13,7 +13,7 @@ in {
       (mkDoc "Enable networking for this system");
   };
 
-  config = {
+  config = mkIf cfg.enable {
     networking = {
       networkmanager.enable = true;
       nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.zero.zero.one" ];

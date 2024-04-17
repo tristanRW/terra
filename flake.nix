@@ -1,7 +1,6 @@
 {
-  description = ''This flake is intended to provide a easy and quick setup for nixOS based daily-drivers.
-  It uses the KDE Plasma DE and aims to provide the most up to date version by using the nixos-unstable nixpkgs.
-  Configuration is exposed at a high-level via config.terra.XYZ and split into multiple modules with transparent dependencies.'';
+  description = ''This flake is intended to provide a easy and quick setup for nixOS based end-user machines.
+  home-manager and plasma-manager are needed, the latter needs to be uses with home-manager.sharedModules [ plasma-manager.nixosModules.plasma-manager];'';
 
   inputs = {
     nixpkgs = {
@@ -26,7 +25,6 @@
     vimix-nord-cursors = {
         url = "github:tristanRW/Vimix-nord-cursors";
       };
-
 
     nix-index-database = {
       url = "github:Mic92/nix-index-database";

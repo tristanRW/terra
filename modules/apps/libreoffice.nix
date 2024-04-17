@@ -7,7 +7,7 @@
 let
 in {
 
-  options.terra.apps.office.libre =
+  options.terra.apps.libreoffice =
   let
     inherit (lib) mkEnableOption mkOption mkDoc types;
   in {
@@ -22,7 +22,7 @@ in {
   config =
   let
     inherit (lib) mkIf;
-    cfg = config.terra.apps.office.libre;
+    cfg = config.terra.apps.libreoffice;
     user = config.terra.user.name;
   in mkIf cfg.enable {
     home-manager.users.${user}.home.packages = [

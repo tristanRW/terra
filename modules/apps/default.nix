@@ -1,8 +1,11 @@
 {
+  config,
+  pkgs,
   lib,
   ...
 }:
 let
+in {
   imports =
   let
     inherit (lib.attrsets) mapAttrsToList filterAttrs; #import functions
@@ -12,7 +15,4 @@ let
     (filterAttrs (f: _:
       f != "default.nix")
       (builtins.readDir ./.));
-
-in {
-  inherit imports;
 }
