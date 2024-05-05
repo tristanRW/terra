@@ -7,18 +7,18 @@
 let
 in {
 
-  options.terra.suites.bitcoin =
+  options.terra.bitcoin =
   let
     inherit (lib) mkDoc mkEnableOption;
   in {
     enable = mkEnableOption
-      (mkDoc "Enable terras bitcoin suite. wallet (sparrow) & trading-platform (bisq)");
+      (mkDoc "Install bitcoin related software. (bisq, sparrow)");
   };
 
   config =
   let
     inherit (lib) mkIf;
-    cfg = config.terra.suites.bitcoin;
+    cfg = config.terra.bitcoin;
   in mkIf cfg.enable{
 
     home-manager.users.${config.terra.base.user.name}.home.packages = [

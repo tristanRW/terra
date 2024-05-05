@@ -75,8 +75,7 @@
       let
         inherit (pkgs);
       in [
-        pkgs.nix-index
-        pkgs.nil
+        pkgs.nil #enable nix LanguageServer
       ];
     };
   };

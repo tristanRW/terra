@@ -7,7 +7,7 @@
 let
 in {
 
-  options.terra.suites.office =
+  options.terra.office =
   let
     inherit (lib) mkDoc mkEnableOption;
   in {
@@ -18,7 +18,7 @@ in {
   config =
   let
     inherit (lib) mkIf;
-    cfg = config.terra.suites.office;
+    cfg = config.terra.office;
   in mkIf cfg.enable{
     terra.apps = {
       libreoffice = {

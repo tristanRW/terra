@@ -41,7 +41,11 @@ in {
     inherit (lib) mkIf;
     cfg = config.terra.dev;
     extensions =
-      (if cfg.direnv then [ pkgs.vscode-extensions.mkhl.direnv ] else [  ])
+      (if cfg.direnv then
+        [
+          pkgs.vscode-extensions.mkhl.direnv
+          pkgs.vscode-extensions.jnoortheen.nix-ide
+        ] else [  ])
       ++ (if cfg.vsc.extraExtensions != null then cfg.vsc.extraExtensions else [  ]);
     userSettings =
       cfg.vsc.userSettings
