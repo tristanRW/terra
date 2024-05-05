@@ -9,15 +9,15 @@ let
 in {
   options.terra.terminal =
   let
-    inherit (lib.types) attrsOf listOf attrs; #import necessary types
+    inherit (lib.types) attrsOf listOf attrs anything str; #import necessary types
     inherit (lib) mkEnableOption mkOption mkDoc;
   in {
     enable = mkEnableOption
       (mkDoc "Enable configured terminal with fish (shell) and starship (prompt) and sane defaults.");
 
-    greeting = lib.mkOption {
-      type = lib.types.str;
-      description = lib.mdDoc "Set the fish greeting. Empty string removes the greeting (default).";
+    greeting = mkOption {
+      type = str;
+      description = mkDoc "Set the fish greeting. Empty string removes the greeting (default).";
       default = "";
     };
 
@@ -33,7 +33,11 @@ in {
       default = [];
       description = "Plugins to be added to fish";
     };
-    
+    starship-settings = mkOption {
+      type = attrsOf anything;
+      default = {};
+      description = "Settings for starship prompt";
+    };
     #userKeybindings = mkOption {
     #  type = listOf str;
     #  default = [];
@@ -55,13 +59,13 @@ in {
           inherit (lib) concatStrings;
         in {
           enable = true; #manage fish with home-manager
-          plugins = cfg.fish.plugins;
+          plugins = cfg.plugins;
           functions =
             mapAttrs
               (i: v:
                 { description = v.description; body = v.body; }
               )
-              cfg.fish.functions; #remove progs from functions
+              cfg.functions; #remove progs from functions
           interactiveShellInit =
             concatStrings [
               #config.terra.fish.userKeybindings
@@ -72,7 +76,7 @@ in {
         };
         starship = 
         let
-          settings = cfg.starship.settings;
+          settings = cfg.starship-settings;
         in {
           enable = true;
           inherit settings;
@@ -88,7 +92,7 @@ in {
             (mapAttrsToList
               (_: v: if v ? "progs" then v.progs else [])
               #take progs where possible and [] where not since it will be flattened anyway
-                cfg.fish.functions)); #get progs fields as list; #add packages required by functions to userspace packages
+                cfg.functions)); #get progs fields as list; #add packages required by functions to userspace packages
     };
     users.users.${user}.shell = pkgs.fish;
     #set fish as default shell for main user is desired

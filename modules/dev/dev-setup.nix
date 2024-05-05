@@ -24,7 +24,7 @@ in {
         description = "List of vscode extensions to install.";
       };
       userSettings = mkOption {
-        type = pkgs.formats.json;
+        type = (pkgs.formats.json {}).type;
         default = {  };
         description = "User settings for vscode.";
       };
