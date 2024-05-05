@@ -12,7 +12,7 @@ in {
     inherit (lib) mkDoc mkEnableOption;
   in {
     enable = mkEnableOption
-      (mkDoc "Enable terras office suite. Office-Suite (libreoffice) & Email-Client (thunderbird)");
+      (mkDoc "Enable terras office suite. Office-Suite (libreoffice), pdf-editor (pdfstudio) & Email-Client (thunderbird)");
   };
 
   config =
@@ -25,6 +25,9 @@ in {
         enable = true;
       };
       thunderbird = {
+        enable = true;
+      };
+      pdfstudio = {
         enable = true;
       };
     };

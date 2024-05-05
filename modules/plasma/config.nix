@@ -23,7 +23,7 @@ in {
       };
     };
 
-    home-manager.users.${config.terra.user.name} = {
+    home-manager.users.${config.terra.base.user.name} = {
       programs.plasma =
       {
       } // cfg.settings;

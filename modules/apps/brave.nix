@@ -18,7 +18,7 @@ in {
     inherit (lib) mkIf;
     cfg = config.terra.apps.brave;
   in mkIf cfg.enable {
-    home-manager.users.${config.terra.user.name}.programs = {
+    home-manager.users.${config.terra.base.user.name}.programs = {
       brave = {
         enable = true;
       };

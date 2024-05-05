@@ -21,7 +21,7 @@ in {
     cfg = config.terra.suites.bitcoin;
   in mkIf cfg.enable{
 
-    home-manager.users.${config.terra.user.name}.home.packages = [
+    home-manager.users.${config.terra.base.user.name}.home.packages = [
       pkgs.bisq-desktop
       pkgs.sparrow
     ];

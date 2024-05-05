@@ -5,10 +5,10 @@
 }:
 let
   inherit (lib) mkEnableOption mkDoc mkIf;
-  cfg = config.terra.net;
+  cfg = config.terra.base.net;
 in {
 
-  options.terra.net = {
+  options.terra.base.net = {
     enable = mkEnableOption 
       (mkDoc "Enable networking for this system");
   };
@@ -24,9 +24,7 @@ in {
       dnssec = "true";
       domains = [ "~." ];
       fallbackDns = [ "8.8.8.8#eight.eight.eight.eight" "8.8.4.4#eight.eight.four.four" ];
-      extraConfig = ''
-        DNSOverTLS=yes
-      '';
+      dnsovertls = "true";
     };
   };
 }

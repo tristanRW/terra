@@ -6,7 +6,7 @@
   ...
 }:
 let
-  u = config.terra.user.name;
+  u = config.terra.base.user.name;
   settings = {
     ###format
     format = lib.strings.concatStrings [

@@ -44,7 +44,7 @@ in {
 
   config = lib.mkIf config.terra.fish.enable {
     programs.fish.enable = true; #enable nixosModule to allow vendorcompletions
-    home-manager.users.${config.terra.user.name} =
+    home-manager.users.${config.terra.base.user.name} =
     let
       inherit (lib.attrsets) mapAttrs mapAttrsToList;
       inherit (lib.lists) unique flatten;
@@ -76,7 +76,7 @@ in {
       };
       home.packages = f_requiredprogs; #add packages required by functions to userspace packages
     };
-    users.users.${config.terra.user.name}.shell = lib.mkIf config.terra.fish.asDefault pkgs.fish;
+    users.users.${config.terra.base.user.name}.shell = lib.mkIf config.terra.fish.asDefault pkgs.fish;
     #set fish as default shell for main user is desired
   };
 }

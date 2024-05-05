@@ -17,9 +17,9 @@ in {
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
     #fix app-launcher not showing hm-programs
-    home-manager.users.${config.terra.user.name} = {
-      targets.genericLinux.enable = true;
-      programs.bash.enable = true;
-    };
+    #home-manager.users.${config.terra.base.user.name} = {
+    #  targets.genericLinux.enable = true;
+    #  programs.bash.enable = true;
+    #};
   };
 }

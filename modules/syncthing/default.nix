@@ -24,9 +24,9 @@
 
   config.services.syncthing = {
     enable = config.terra.syncthing.enable;
-    user = config.terra.user.name;
-    dataDir = "/home/${config.terra.user.name}/Documents";
-    configDir = "/home/${config.terra.user.name}/.config/syncthing";
+    user = config.terra.base.user.name;
+    dataDir = "/home/${config.terra.base.user.name}/Documents";
+    configDir = "/home/${config.terra.base.user.name}/.config/syncthing";
     overrideDevices = true;     # overrides any devices added or deleted through the WebUI
     overrideFolders = true;     # overrides any folders added or deleted through the WebUI
     settings = {

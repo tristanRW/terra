@@ -19,7 +19,7 @@ in {
     inherit (lib) mkIf;
     cfg = config.terra.apps.thunderbird;
   in mkIf cfg.enable {
-    home-manager.users.${config.terra.user.name}.home.packages = [
+    home-manager.users.${config.terra.base.user.name}.home.packages = [
       pkgs.thunderbird
     ];
   };

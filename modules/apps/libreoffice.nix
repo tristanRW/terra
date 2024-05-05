@@ -23,7 +23,7 @@ in {
   let
     inherit (lib) mkIf;
     cfg = config.terra.apps.libreoffice;
-    user = config.terra.user.name;
+    user = config.terra.base.user.name;
   in mkIf cfg.enable {
     home-manager.users.${user}.home.packages = [
       cfg.package

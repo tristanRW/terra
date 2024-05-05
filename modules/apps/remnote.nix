@@ -18,7 +18,7 @@ in {
   config =
   let
     inherit (lib) mkIf;
-    user = config.terra.user.name;
+    user = config.terra.base.user.name;
     cfg = config.terra.apps.remnote;
   in mkIf cfg.enable {
     home-manager.users.${user}.home.packages = [
