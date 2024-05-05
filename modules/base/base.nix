@@ -5,22 +5,10 @@
   ...
 }:
 let
-  imports =
-  let
-    inherit (lib.attrsets) mapAttrsToList filterAttrs;
-  in
-  (mapAttrsToList (f: _:
-    ./. + "/${f}"))
-    (filterAttrs (f: _:
-      f != "default.nix")
-      (builtins.readDir ./.));
+  cfg = config.terra.base;
 
-  inherit (lib) mkEnableOption mkOption mkDoc mkIf types; #import functions
-
-  cfg = config.terra.base; #shorten config.terra.base to cfg
+  inherit (lib) mkEnableOption mkDoc mkOption types;
 in {
-  inherit imports;
-
   options.terra.base = {
     enable = mkEnableOption (mkDoc "Enable terras reasonable base.");
     version = mkOption {
@@ -52,7 +40,10 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
+  config =
+  let
+    inherit (lib) mkIf;
+  in mkIf cfg.enable {
     # hardware should be set up by system
 
     boot.loader.systemd-boot.enable = true;
@@ -132,6 +123,17 @@ in {
       settings.experimental-features = [ "nix-command" "flakes" ]; #enable flakes
     };
 
-
+    networking = {
+      networkmanager.enable = true;
+      nameservers = [ "1.1.1.1#one.one.one.one" "1.0.0.1#one.zero.zero.one" ];
+    };
+    services.resolved = {
+      #systemds local-dns, basically only needed for tailscale: consider moving into tailscale module
+      enable = true;
+      dnssec = "true";
+      domains = [ "~." ];
+      fallbackDns = [ "8.8.8.8#eight.eight.eight.eight" "8.8.4.4#eight.eight.four.four" ];
+      dnsovertls = "true";
+    };
   };
 }
