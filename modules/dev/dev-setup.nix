@@ -23,11 +23,16 @@ in {
         default = [  ];
         description = "List of vscode extensions to install.";
       };
+      userSettings = mkOption {
+        type = pkgs.formats.json;
+        default = {  };
+        description = "User settings for vscode.";
+      };
     };
     direnv = mkOption {
       type = types.bool;
       default = true;
-      description = "Enable nix-direnv integration.";
+      description = "Enable nix-direnv and its integration via the direnv vscode-extension.";
     };
   };
 
@@ -35,17 +40,23 @@ in {
   let
     inherit (lib) mkIf;
     cfg = config.terra.dev;
-    extensions = 
+    extensions =
       (if cfg.direnv then [ pkgs.vscode-extensions.mkhl.direnv ] else [  ])
       ++ (if cfg.vsc.extraExtensions != null then cfg.vsc.extraExtensions else [  ]);
+    userSettings =
+      cfg.vsc.userSettings
+      // { #ensures extensionDir is not overwritten when extensions are synced
+        "extensions.autoCheckUpdates" = false;
+        "extensions.autoUpdate" = false;
+      };
   in mkIf cfg.enable {
     home-manager.users.${user}.programs = {
       vscode = {
         enable = true;
-        package = pkgs.vscode-with-extensions;
-        enableUpdateCheck = false;
+        package = pkgs.vscode;
+        enableUpdateCheck = false; # is applied in userSettings - making them readonly after sync
         mutableExtensionsDir = true;
-        inherit extensions;
+        inherit extensions userSettings;
       };
       direnv = mkIf cfg.direnv {
         enable = true;

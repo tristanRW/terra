@@ -70,5 +70,14 @@
           (toLower n)
           (import ./modules/${n})
       ) (readDir ./modules); #read modules dir
+    devShells.${system}.default = pkgs.mkShell {
+      buildInputs =
+      let
+        inherit (pkgs);
+      in [
+        pkgs.nix-index
+        pkgs.nil
+      ];
+    };
   };
 }
