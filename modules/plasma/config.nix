@@ -48,10 +48,10 @@ in {
         ]; #configure codecs to be used in bt
       };
     };
-    #hardware.pulseaudio = {
-    #  enable = true;
-    #  package = pkgs.pulseaudioFull;
-    #}; #enable additional codecs like LDAC and AAC
+    hardware.pulseaudio = mkIf cfg.bluetooth.additional-codecs {
+      enable = true;
+      package = pkgs.pulseaudioFull;
+    }; #enable additional codecs like LDAC and AAC
 
     #enable bluetooth
     hardware.bluetooth = {
@@ -60,6 +60,7 @@ in {
       settings = {
         General = {
           Enable = "Source,Sink,Media,Socket";
+          Experimental = cfg.bluetooth.show-battery-percentage;
         }; # This enables A2DP-Sink support for headsets (higgquality sound), "Enable" is indeed correct its not a nix key
       };
     };
